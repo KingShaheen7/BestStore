@@ -1,0 +1,72 @@
+﻿@using Newtonsoft.Json
+@model List<Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="index">
+    <div class="details" style="width:100%; position: relative;">
+        <div class="recentOrders scrollable-div" style="width:100%;">
+            <div class="cardHeader">
+                <h2>Laptops Section</h2>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Create At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        var serializedProduct = JsonConvert.SerializeObject(product);
+                        <tr>
+                            <td>@product.Id</td>
+                            <td>@product.Name</td>
+                            <td>@product.Brand</td>
+                            <td>@product.Category</td>
+                            <td>@(product.Price)$</td>
+                            <td><img src="/Products/@product.ImageFileName" class="icon-image" /></td>
+                            <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                            <td style="white-space:nowrap">
+                                <a class="btn btn-primary btn-sm" style="background-color: lightgreen;"
+                                   onclick='showInfoDiv(@Html.Raw(serializedProduct)); return false;' title="details">
+                                    <ion-icon style="width:30px; height:30px; float:left;" name="information-circle-outline"></ion-icon>
+                                </a>
+                            </td>
+                            <td style="white-space:nowrap">
+                                <a class="btn btn-primary btn-sm"
+                                   onclick='showAddToCartDiv(@Html.Raw(serializedProduct)); return false;' title="add to Cart">
+                                    <ion-icon style="width:30px; height:30px; float:left;" name="cart-outline"></ion-icon>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Product Details Section -->
+        <div class="recentCustomers" id="infoDiv" style="display:none;">
+            <div class="cardHeader">
+                <h2>Details</h2>
+            </div>
+            <div id="productInfoContent"></div>
+        </div>
+
+        <!-- Add to Cart Section -->
+        <div class="recentCustomers" id="addToCartDiv" style="display:none;">
+            <div class="cardHeader">
+                <h2>Add to Cart</h2>
+            </div>
+            <div id="addToCartContent"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+﻿@model List<Product>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="index">
+    <div class="cardBox">
+        <a style="text-decoration: none;" asp-controller="Products" asp-action="Create">
+            <div class="card">
+                <div>
+                    <div class="numbers">New Product</div>
+                    <div class="cardName">Add New</div>
+                </div>
+
+                <div class="iconBx">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                </div>
+            </div>
+		</a>
+        <div class="card">
+            <div>
+                <div class="numbers">Manage Requests</div>
+                <div class="cardName">Sales</div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="cart-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">284</div>
+                <div class="cardName">Comments</div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">$7,842</div>
+                <div class="cardName">Earning</div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="cash-outline"></ion-icon>
+            </div>
+        </div>
+    </div>
+		<div class="details" style="width:100%;">
+
+        <div class="recentOrders scrollable-div" style="width:154%;">
+            <div class="cardHeader">
+                <h2>All Products</h2>
+            </div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Brand</th>
+							<th>Category</th>
+							<th>Price</th>
+							<th>Image</th>
+							<th>Created At</th>                            
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var product in Model)
+						{
+							<tr>
+								<td >@product.Id</td>
+								<td >@product.Name</td>
+								<td >@product.Brand</td>
+								<td >@product.Category</td>
+								<td >@(product.Price)$</td>
+                                <td><img src="/Products/@product.ImageFileName" class="icon-image" /></td>
+								<td >@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+								<td >
+									<a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+								</td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirm('Sure to delete this item?')">Delete</a>
+                                </td>
+
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+        
+		</div>	
+
+</div>

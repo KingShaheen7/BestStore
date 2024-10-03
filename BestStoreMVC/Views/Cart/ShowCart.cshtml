@@ -1,0 +1,47 @@
+﻿@model List<RequestItems>
+@{
+	decimal total = 0;
+	foreach (var request in Model)
+	{
+		total += (request.RequestProduct.Price) * (request.Cuantity);
+	}
+}
+
+<h2 class="text-center mb-5">Cart Items</h2>
+<div class="row mb-3">
+	<h5>Total Amount: @total</h5>
+	<div class="col">
+		<a class="btn btn-primary" style="background-color:lightgreen; color:black"  asp-controller="Products" asp-action="Create">Send Request</a>
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Brand</th>
+			<th>Price</th>
+			<th>Image</th>
+			<th>Imported At</th>
+			<th>Quantity</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var request in Model)
+		{
+			<tr>
+				<td>@request.RequestProduct.Name</td>
+				<td>@request.RequestProduct.Brand</td>
+				<td>@(request.RequestProduct.Price)$</td>
+				<td><img src="/Products/@request.RequestProduct.ImageFileName" width="100" /></td>
+				<td>@request.RequestProduct.CreatedAt.ToString("MM/dd/yyyy")</td>
+				<td>@request.Cuantity</td>
+				<td style="white-space:nowrap">
+					<a class="btn btn-primary btn-sm" asp-controller="Cart" asp-action="EditQuantity" asp-route-id="@request.Id">Edit Quantity</a>
+					<a class="btn btn-danger btn-sm" asp-controller="Cart" asp-action="Delete" asp-route-id="@request.Id" onclick="return confirm('Sure to delete this item?')">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
